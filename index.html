@@ -521,8 +521,8 @@ document.addEventListener('keydown', function(e) {
 });
 
 // ===== DATA STORE =====
-const TOPICS = ['지역정책', '이주·이민', '공동체 연구', '도시사회학', '현장 메모'];
-const TOPIC_GOALS = { '지역정책': 10, '이주·이민': 12, '공동체 연구': 8, '도시사회학': 10, '현장 메모': 15 };
+const TOPICS = ['AI산업 공간불평등', '청년 여성 이동', '관계 인구', '신도시', '현장 메모'];
+const TOPIC_GOALS = { 'AI산업 공간불평등': 10, '청년 여성 이동': 12, '관계 인구': 8, '신도시': 10, '현장 메모': 15 };
 
 let posts = JSON.parse(localStorage.getItem('rdi_posts') || '[]');
 let comments = JSON.parse(localStorage.getItem('rdi_comments') || '{}');
@@ -683,11 +683,11 @@ function renderMap() {
   const grid = document.getElementById('map-grid');
   grid.innerHTML = '';
   const insights = {
-    '지역정책': '귀농 정책의 구조적 한계를 집중 탐색 중',
-    '이주·이민': '2세대 정체성 협상이 핵심 문제의식으로 부상',
-    '공동체 연구': '신뢰 자본과 외부인 수용 패턴에 주목',
-    '도시사회학': '로컬푸드 운동의 계급 함의 분석 진행 중',
-    '현장 메모': '대전·충남 지역 중심의 현장 기록 축적 중'
+    'AI산업 공간불평등': 'AI산업의 이익과 피해의 지리적 배치 탐구',
+    '청년 여성 이동': '청년 여성의 수도권 비수도권 지역이동 문화적 동인 탐구',
+    '관계 인구': '타 지역에 장소애착을 가지고 참여하는 사람들, 현상 탐구',
+    '신도시': '도시 확장으로 농촌성과 조우하는 감각',
+    '현장 메모': '강화유니버스, 지축 신도시, 트랜스로컬 활동 현장'
   };
   TOPICS.forEach(topic => {
     const topicPosts = posts.filter(p => !p.draft && p.topic === topic);
