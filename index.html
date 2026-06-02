@@ -377,15 +377,15 @@ body {
   <nav class="header-nav">
     <button class="nav-btn active" id="nav-home" onclick="showPage('home')">홈</button>
     <button class="nav-btn" id="nav-map" onclick="showPage('map')">주제맵</button>
-    <button class="write-btn" onclick="showPage('write')">✏ 오늘의 글 쓰기</button>
+    <button class="write-btn" id="write-btn" onclick="showPage('write')" style="display:none">✏ 오늘의 글 쓰기</button>
   </nav>
 </header>
 
 <!-- HOME -->
 <div id="page-home" class="page active">
   <div class="home-hero">
-    <h1>도시와 농촌의 공존하도록 <br> 다양한 삶 방식이 존재하도록 지역을 연구합니다 </h1>
-    <p> 매일 한 페이지 조사와 독서 기록 annyung83@gmail.com </p>
+    <h1>도시와 농촌 공존, <br>다양한 삶이 가능한 지역을 위해 연구합니다</h1>
+    <p>매일 한 페이지 조사와 독서의 흔적 annyung83@gmail.com</p>
     <div class="hero-stats">
       <div class="hero-stat"><span class="num" id="stat-posts">0</span><span class="label">총 글</span></div>
       <div class="hero-stat"><span class="num" id="stat-days">0</span><span class="label">연속 기록</span></div>
@@ -489,6 +489,25 @@ body {
 <div class="toast" id="toast"></div>
 
 <script>
+// ===== 관리자 단축키 =====
+const ADMIN_PIN = '1983';
+let adminUnlocked = false;
+
+document.addEventListener('keydown', function(e) {
+  if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === 'W') {
+    e.preventDefault();
+    if (adminUnlocked) { showPage('write'); return; }
+    const pin = prompt('관리자 비밀번호를 입력하세요:');
+    if (pin === ADMIN_PIN) {
+      adminUnlocked = true;
+      document.getElementById('write-btn').style.display = 'inline-block';
+      showPage('write');
+    } else if (pin !== null) {
+      alert('비밀번호가 맞지 않습니다.');
+    }
+  }
+});
+
 // ===== DATA STORE =====
 const TOPICS = ['지역정책', '이주·이민', '공동체 연구', '도시사회학', '현장 메모'];
 const TOPIC_GOALS = { '지역정책': 10, '이주·이민': 12, '공동체 연구': 8, '도시사회학': 10, '현장 메모': 15 };
