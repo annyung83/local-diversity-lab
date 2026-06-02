@@ -2,7 +2,7 @@
 
 ## 글쓰기 방법
 1. 사이트 접속: https://annyung83.github.io/local-diversity-lab/
-2. 키보드에서 Ctrl+Shift+W (윈도우) 또는 Cmd+Shift+W (맥) 누르기
+2. 키보드에서 Ctrl+Shift+A
 3. 비밀번호 입력
 4. 글쓰기 화면에서 제목, 주제, 내용 작성 후 발행하기
 
