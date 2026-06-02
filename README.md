@@ -1,19 +1,8 @@
-# 지역다양성연구소 운영 메모
-
-## 글쓰기 방법
-1. 사이트 접속: https://annyung83.github.io/local-diversity-lab/
-2. 키보드에서 Ctrl+Shift+A
-3. 비밀번호 입력
-4. 글쓰기 화면에서 제목, 주제, 내용 작성 후 발행하기
-
-## 관리자 비밀번호 입력
+# 관리자 로그인
+https://annyung83.github.io/local-diversity-lab/#admin
 
 ## 주제 변경 방법
-
-찾아야 할 부분
-GitHub → index.html → 연필 ✏ → Ctrl+F로 아래 검색:
-TOPICS
-그러면 이런 줄이 나타납니다:
+Ctrl+F로 아래 검색: TOPICS
 javascriptconst TOPICS = ['지역정책', '이주·이민', '공동체 연구', '도시사회학', '현장 메모'];
 
 수정 방법
