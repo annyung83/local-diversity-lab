@@ -500,23 +500,29 @@ body {
 <div class="toast" id="toast"></div>
 
 <script>
-// ===== 관리자 단축키 =====
+// ===== 관리자 접속 (#admin 주소 방식) =====
+// 접속 주소: https://annyung83.github.io/local-diversity-lab/#admin
 const ADMIN_PIN = '1983';
 let adminUnlocked = false;
 
-document.addEventListener('keydown', function(e) {
-  if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === 'A') {
-    e.preventDefault();
-    if (adminUnlocked) { showPage('write'); return; }
-    const pin = prompt('관리자 비밀번호를 입력하세요:');
-    if (pin === ADMIN_PIN) {
-      adminUnlocked = true;
-      document.getElementById('write-btn').style.display = 'inline-block';
-      document.body.classList.add('admin-mode');
-      showPage('write');
-    } else if (pin !== null) {
-      alert('비밀번호가 맞지 않습니다.');
-    }
+function tryAdminUnlock() {
+  if (adminUnlocked) { showPage('write'); return; }
+  const pin = prompt('관리자 비밀번호를 입력하세요:');
+  if (pin === ADMIN_PIN) {
+    adminUnlocked = true;
+    document.getElementById('write-btn').style.display = 'inline-block';
+    document.body.classList.add('admin-mode');
+    showPage('write');
+    history.replaceState(null, '', window.location.pathname);
+  } else if (pin !== null) {
+    alert('비밀번호가 맞지 않습니다.');
+    history.replaceState(null, '', window.location.pathname);
+  }
+}
+
+window.addEventListener('load', function() {
+  if (window.location.hash === '#admin') {
+    setTimeout(tryAdminUnlock, 300);
   }
 });
 
