@@ -395,8 +395,8 @@ body {
 <div id="page-home" class="page active">
   <div class="home-hero">
     <h1>도시와 농촌 공존,<br>
-다양한 삶이 가능한 지역을 위해 연구합니다</h1>
-    <p>매일 한 페이지 조사와 독서의 흔적 annyung83@gmail.com </p>
+다양한 삶이 가능한 지역을 위해 연구하는 사람</h1>
+    <p>매일 한 페이지, 거칠어도 쓰고 나아가는 기록 저장소 annyung83@gmail.com </p>
     <div class="hero-stats">
       <div class="hero-stat"><span class="num" id="stat-posts">0</span><span class="label">총 글</span></div>
       <div class="hero-stat"><span class="num" id="stat-days">0</span><span class="label">연속 기록</span></div>
@@ -521,8 +521,8 @@ document.addEventListener('keydown', function(e) {
 });
 
 // ===== DATA STORE =====
-const TOPICS = ['AI산업 공간불평등', '청년 여성 이동', '관계 인구', '신도시', '현장 메모'];
-const TOPIC_GOALS = { 'AI산업 공간불평등': 10, '청년 여성 이동': 12, '관계 인구': 8, '신도시': 10, '현장 메모': 15 };
+const TOPICS = ['AI산업 공간불평등', '청년 여성 이동', '관계 인구', '신도시', '현장 메모', '연구자로 살기', '기타'];
+const TOPIC_GOALS = { 'AI산업 공간불평등': 5, '청년 여성 이동': 3, '관계 인구': 5, '신도시': 2, '현장 메모': 5, '연구자로 살기': 3, '기타':2 };
 
 let posts = JSON.parse(localStorage.getItem('rdi_posts') || '[]');
 let comments = JSON.parse(localStorage.getItem('rdi_comments') || '{}');
@@ -687,7 +687,9 @@ function renderMap() {
     '청년 여성 이동': '청년 여성의 수도권 비수도권 지역이동 문화적 동인 탐구',
     '관계 인구': '타 지역에 장소애착을 가지고 참여하는 사람들, 현상 탐구',
     '신도시': '도시 확장으로 농촌성과 조우하는 감각',
-    '현장 메모': '강화유니버스, 지축 신도시, 트랜스로컬 활동 현장'
+    '현장 메모': '강화유니버스, 농촌, 은평-지축-양주, 트랜스로컬 활동 현장'
+    '연구자로 살기': '독립연구자, 대학원생, 엄마연구자, 현장연구, 협업 등'
+    '기타': 생성되는 글감들
   };
   TOPICS.forEach(topic => {
     const topicPosts = posts.filter(p => !p.draft && p.topic === topic);
