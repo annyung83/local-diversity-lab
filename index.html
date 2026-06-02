@@ -189,6 +189,16 @@ body {
 }
 .streak-num { font-family: var(--serif); font-size: 1.8rem; color: var(--accent); display: block; }
 .streak-label { font-size: 11px; color: var(--ink-muted); }
+.btn-delete {
+  background: none; border: 1px solid #e0b0b0;
+  border-radius: 5px; padding: 4px 12px;
+  font-family: var(--sans); font-size: 12px; color: #a04040;
+  cursor: pointer; margin-left: auto;
+  transition: background 0.15s;
+  display: none;
+}
+.btn-delete:hover { background: #fdf0f0; }
+.admin-mode .btn-delete { display: inline-block; }
 
 /* === TOPIC MAP === */
 #page-map { padding: 2rem; }
@@ -384,8 +394,8 @@ body {
 <!-- HOME -->
 <div id="page-home" class="page active">
   <div class="home-hero">
-    <h1>도시와 농촌 공존, <br>다양한 삶이 가능한 지역을 위해 연구합니다</h1>
-    <p>매일 한 페이지 조사와 독서의 흔적 annyung83@gmail.com</p>
+    <h1>지역사회의 다양성을<br>기록하고 연결합니다</h1>
+    <p>매일 한 페이지, 지역 · 이주 · 공동체에 관한 조사와 독서의 흔적</p>
     <div class="hero-stats">
       <div class="hero-stat"><span class="num" id="stat-posts">0</span><span class="label">총 글</span></div>
       <div class="hero-stat"><span class="num" id="stat-days">0</span><span class="label">연속 기록</span></div>
@@ -501,6 +511,7 @@ document.addEventListener('keydown', function(e) {
     if (pin === ADMIN_PIN) {
       adminUnlocked = true;
       document.getElementById('write-btn').style.display = 'inline-block';
+      document.body.classList.add('admin-mode');
       showPage('write');
     } else if (pin !== null) {
       alert('비밀번호가 맞지 않습니다.');
@@ -517,24 +528,9 @@ let comments = JSON.parse(localStorage.getItem('rdi_comments') || '{}');
 let currentFilter = 'all';
 let currentPostId = null;
 
-// seed demo data if empty
+// 처음 방문 시 빈 상태로 시작
 if (posts.length === 0) {
-  const today = new Date();
-  const fmt = (d) => d.toISOString().split('T')[0];
-  const d0 = new Date(today); d0.setDate(today.getDate() - 0);
-  const d1 = new Date(today); d1.setDate(today.getDate() - 1);
-  const d2 = new Date(today); d2.setDate(today.getDate() - 3);
-  const d3 = new Date(today); d3.setDate(today.getDate() - 5);
-  const d4 = new Date(today); d4.setDate(today.getDate() - 7);
-
-  posts = [
-    { id: 1, date: fmt(d0), title: '농촌 소멸과 귀농 정책의 간극', topic: '지역정책', body: '오늘 읽은 보고서는 통계청의 2023년 인구이동통계를 기반으로 한다. 전국 228개 시·군·구 중 절반 이상이 인구 감소 위험에 처해 있으며, 특히 경북·전남 내륙 지역의 순유출이 가파르다.\n\n흥미로운 점은 귀농 인구가 꾸준히 증가하고 있음에도 불구하고 소멸 지수가 개선되지 않는다는 것이다. 이는 귀농자의 연령대가 주로 50대 이상이기 때문으로, 청년 정착 프로그램이 실질적으로 작동하지 않고 있음을 시사한다.\n\n지역정책 연구에서 자주 놓치는 부분이 바로 이 지점이다. 숫자만 보면 귀농이 늘었으니 정책이 성공한 것처럼 보이지만, 구조적 문제(학교 소멸, 의료 공백, 일자리 부재)는 그대로다. 다음 주에는 충남 홍성군 사례를 직접 인터뷰로 살펴볼 예정이다.', draft: false },
-    { id: 2, date: fmt(d1), title: '이주민 2세대의 정체성 협상', topic: '이주·이민', body: '베트남 출신 이주민 2세대 청소년 세 명과 비공식 대화를 나눴다. 모두 경기도 안산 출생이며, 학교에서는 한국어를, 집에서는 베트남어를 쓴다.\n\n공통적으로 나온 표현이 "반쪽"이었다. 한국인도 아니고 베트남인도 아닌 중간 어딘가에 있다는 감각. 그러나 이것을 단순히 소외로 읽어서는 안 된다는 생각이 들었다. 이들은 두 문화를 오가는 유연성을 하나의 자원으로 인식하기도 했다.\n\n오늘 읽은 논문(Park, 2022)은 이를 "문화적 중개자" 역할로 개념화한다. 그러나 그 역할을 수행하는 부담이 개인에게 지나치게 집중된다는 비판도 함께 제기된다. 제도적 지원 없이 개인의 적응력에 의존하는 구조가 문제의 핵심이다.', draft: false },
-    { id: 3, date: fmt(d2), title: '공동체 마을 사례: 홍동·청양', topic: '공동체 연구', body: '충남 홍동의 풀무학교와 홍동밀알공동체를 중심으로 한 연구 자료를 검토했다. 이 지역은 1950년대 시작된 협동조합 운동의 역사를 가지고 있으며, 현재까지도 지역 내 사회적 경제 비율이 전국 최고 수준이다.\n\n특히 주목할 만한 것은 외부인 유입에 대한 태도다. 홍동의 경우 귀촌자를 즉각 공동체 구성원으로 받아들이기보다, 최소 2-3년의 관계 형성 기간을 비공식적으로 요구한다. 이는 공동체의 신뢰 자본을 보호하는 장치로 작동한다.', draft: false },
-    { id: 4, date: fmt(d3), title: '로컬푸드 운동의 계급적 함의', topic: '도시사회학', body: '도시 로컬푸드 운동을 계급 분석의 렌즈로 바라본 논문(정민우, 2021)을 읽었다. 서울 성동구와 마포구의 도시농업·로컬푸드 매장을 이용하는 소비자 프로필 분석이 흥미롭다.\n\n결론을 요약하면, 로컬푸드 소비는 생태적 가치 지향과 높은 교육 수준, 중상위 소득층과 강한 상관관계를 보인다. 즉 "착한 소비"가 특정 계층의 문화자본 표현 방식이 되는 역설이 존재한다.', draft: false },
-    { id: 5, date: fmt(d4), title: '현장 메모: 대전 중리동 방문', topic: '현장 메모', body: '오후에 대전 서구 중리동을 돌아봤다. 1970년대 형성된 구도심 주거지로, 현재는 고령화와 공가 증가가 두드러진다.\n\n골목길에서 만난 주민(75세 여성)은 "젊은 사람들이 다 나가서 이제 노인들만 남았어"라고 말했다. 2010년대 초까지만 해도 아이들 소리가 났다고. 지금은 복지관 셔틀버스가 그나마 움직이는 유일한 정기적 방문자라고 한다.\n\n공간적으로는 빈집이 군데군데 흩어진 패턴이 아니라, 블록 단위로 비어가는 양상을 보인다. 이는 사회관계망 붕괴가 공간 붕괴를 가속화한다는 가설을 지지하는 관찰이다.', draft: false },
-  ];
-  localStorage.setItem('rdi_posts', JSON.stringify(posts));
+  posts = [];
 }
 
 // ===== UTILITIES =====
@@ -631,6 +627,7 @@ function renderPostsList() {
       <div class="post-meta">
         <span class="post-date">${p.date}</span>
         <span class="post-tag">${p.topic || '미분류'}</span>
+        <button class="btn-delete" data-id="${p.id}" title="글 삭제">삭제</button>
       </div>
       <h3>${p.title}</h3>
       <p class="excerpt">${excerpt(p.body)}</p>
@@ -638,7 +635,15 @@ function renderPostsList() {
         <span>💬 ${cc}개 댓글</span>
         <span>${p.body.length}자</span>
       </div>`;
-    div.onclick = () => openPost(p.id);
+    div.querySelector('h3').onclick = () => openPost(p.id);
+    div.querySelector('.excerpt').onclick = () => openPost(p.id);
+    const delBtn = div.querySelector('.btn-delete');
+    if (delBtn) {
+      delBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        deletePost(p.id, p.title);
+      });
+    }
     container.appendChild(div);
   });
 }
@@ -662,6 +667,15 @@ function calcStreak() {
     else break;
   }
   return streak;
+}
+
+function deletePost(id, title) {
+  if (!adminUnlocked) return;
+  if (!confirm(`"${title}" 글을 삭제하시겠습니까?\n이 작업은 되돌릴 수 없습니다.`)) return;
+  posts = posts.filter(p => p.id !== id);
+  localStorage.setItem('rdi_posts', JSON.stringify(posts));
+  renderHome();
+  showToast('글이 삭제되었습니다');
 }
 
 function renderMap() {
