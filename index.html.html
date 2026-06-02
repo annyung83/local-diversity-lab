@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>지역다양성연구소</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;600&family=Noto+Sans+KR:wght@300;400;500&family=DM+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #1a1a18;
+  --ink-muted: #6b6b60;
+  --ink-faint: #b0af9e;
+  --paper: #f7f5f0;
+  --paper-warm: #efecd6;
+  --paper-card: #faf9f5;
+  --accent: #2d5a3d;
+  --accent-light: #e8f0eb;
+  --accent-mid: #4a8c60;
+  --border: #d8d5c4;
+  --border-light: #eceadc;
+  --serif: 'Noto Serif KR', serif;
+  --sans: 'Noto Sans KR', sans-serif;
+  --mono: 'DM Mono', monospace;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 15px;
+  line-height: 1.8;
+  min-height: 100vh;
+}
+
+/* === HEADER === */
+.site-header {
+  background: var(--paper);
+  border-bottom: 1px solid var(--border);
+  padding: 0 2rem;
+  position: sticky; top: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  height: 56px;
+}
+.site-logo {
+  font-family: var(--serif);
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  cursor: pointer;
+}
+.site-logo span { color: var(--accent); }
+.header-nav { display: flex; gap: 0; }
+.nav-btn {
+  background: none; border: none; cursor: pointer;
+  font-family: var(--sans); font-size: 13px; color: var(--ink-muted);
+  padding: 0 1rem; height: 56px;
+  transition: color 0.2s;
+  border-bottom: 2px solid transparent;
+}
+.nav-btn:hover, .nav-btn.active {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+.write-btn {
+  background: var(--accent); color: #fff; border: none;
+  border-radius: 6px; padding: 6px 16px;
+  font-family: var(--sans); font-size: 13px; font-weight: 500;
+  cursor: pointer; margin-left: 1rem;
+  transition: background 0.2s;
+}
+.write-btn:hover { background: #234a30; }
+
+/* === PAGES === */
+.page { display: none; }
+.page.active { display: block; }
+
+/* === HOME PAGE === */
+.home-hero {
+  border-bottom: 1px solid var(--border);
+  padding: 3rem 2rem 2.5rem;
+  background: linear-gradient(180deg, var(--paper-warm) 0%, var(--paper) 100%);
+}
+.home-hero h1 {
+  font-family: var(--serif);
+  font-size: 2rem; font-weight: 300;
+  letter-spacing: -0.03em;
+  line-height: 1.3;
+  margin-bottom: 0.75rem;
+}
+.home-hero p {
+  color: var(--ink-muted); font-size: 14px;
+  max-width: 540px;
+}
+.hero-stats {
+  display: flex; gap: 2rem; margin-top: 1.5rem;
+}
+.hero-stat { text-align: center; }
+.hero-stat .num {
+  display: block; font-family: var(--serif);
+  font-size: 1.8rem; font-weight: 300; color: var(--accent);
+}
+.hero-stat .label {
+  font-size: 11px; color: var(--ink-faint); letter-spacing: 0.05em; text-transform: uppercase;
+}
+
+.home-layout {
+  display: grid;
+  grid-template-columns: 1fr 280px;
+  max-width: 1100px; margin: 0 auto;
+  gap: 0;
+}
+.posts-section { padding: 2rem; border-right: 1px solid var(--border); }
+.posts-section h2 {
+  font-family: var(--serif); font-size: 0.75rem; font-weight: 400;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--ink-faint); margin-bottom: 1.5rem;
+}
+.post-card {
+  border-bottom: 1px solid var(--border-light);
+  padding: 1.25rem 0;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.post-card:hover { background: var(--accent-light); padding-left: 12px; margin-left: -12px; padding-right: 12px; border-radius: 4px; }
+.post-meta {
+  display: flex; align-items: center; gap: 8px;
+  margin-bottom: 6px;
+}
+.post-date { font-size: 11px; color: var(--ink-faint); font-family: var(--mono); }
+.post-tag {
+  font-size: 10px; font-weight: 500;
+  padding: 2px 8px; border-radius: 20px;
+  background: var(--accent-light); color: var(--accent);
+  letter-spacing: 0.04em;
+}
+.post-card h3 {
+  font-family: var(--serif); font-size: 1.05rem; font-weight: 400;
+  line-height: 1.5; margin-bottom: 4px; color: var(--ink);
+}
+.post-card .excerpt {
+  font-size: 13px; color: var(--ink-muted);
+  line-height: 1.7; display: -webkit-box;
+  -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+}
+.post-card .footer {
+  display: flex; align-items: center; gap: 12px;
+  margin-top: 8px; font-size: 12px; color: var(--ink-faint);
+}
+
+/* === SIDEBAR === */
+.sidebar { padding: 2rem 1.5rem; }
+.sidebar h2 {
+  font-family: var(--serif); font-size: 0.7rem; font-weight: 400;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--ink-faint); margin-bottom: 1rem;
+}
+.topic-item {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 8px 10px; border-radius: 6px;
+  cursor: pointer; margin-bottom: 4px;
+  transition: background 0.15s;
+}
+.topic-item:hover { background: var(--accent-light); }
+.topic-item.active { background: var(--accent-light); }
+.topic-name { font-size: 13px; color: var(--ink); }
+.topic-count {
+  font-size: 11px; font-family: var(--mono);
+  color: var(--ink-faint); background: var(--border-light);
+  padding: 1px 6px; border-radius: 10px;
+}
+.sidebar-divider { border: none; border-top: 1px solid var(--border-light); margin: 1.25rem 0; }
+.progress-label {
+  font-size: 11px; color: var(--ink-muted); margin-bottom: 6px;
+  display: flex; justify-content: space-between;
+}
+.progress-bar {
+  height: 4px; background: var(--border-light); border-radius: 2px; margin-bottom: 12px;
+}
+.progress-fill {
+  height: 100%; border-radius: 2px; background: var(--accent);
+  transition: width 0.5s ease;
+}
+.streak-box {
+  background: var(--paper-warm); border-radius: 8px;
+  padding: 12px; margin-top: 1rem; text-align: center;
+}
+.streak-num { font-family: var(--serif); font-size: 1.8rem; color: var(--accent); display: block; }
+.streak-label { font-size: 11px; color: var(--ink-muted); }
+
+/* === TOPIC MAP === */
+#page-map { padding: 2rem; }
+#page-map h2 {
+  font-family: var(--serif); font-size: 1.4rem; font-weight: 300;
+  margin-bottom: 0.5rem;
+}
+#page-map .subtitle { color: var(--ink-muted); font-size: 13px; margin-bottom: 2rem; }
+.map-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1rem; }
+.map-topic-card {
+  background: var(--paper-card); border: 1px solid var(--border);
+  border-radius: 10px; padding: 1.25rem; cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.map-topic-card:hover { transform: translateY(-2px); box-shadow: 0 4px 16px rgba(0,0,0,0.06); }
+.map-topic-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 12px; }
+.map-topic-name { font-family: var(--serif); font-size: 1rem; font-weight: 400; }
+.map-topic-posts { font-size: 11px; color: var(--ink-faint); font-family: var(--mono); }
+.map-bar { height: 3px; background: var(--border-light); border-radius: 2px; margin-bottom: 12px; }
+.map-bar-fill { height: 100%; border-radius: 2px; background: var(--accent-mid); }
+.map-posts-list { list-style: none; }
+.map-posts-list li {
+  font-size: 12px; color: var(--ink-muted); padding: 3px 0;
+  border-bottom: 1px solid var(--border-light);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.map-posts-list li:last-child { border-bottom: none; }
+.map-insight {
+  background: var(--accent-light); border-left: 3px solid var(--accent);
+  border-radius: 0 6px 6px 0; padding: 10px 14px; margin-top: 12px;
+}
+.map-insight p { font-size: 12px; color: var(--accent); font-style: italic; }
+
+/* === WRITE PAGE === */
+#page-write { max-width: 860px; margin: 0 auto; padding: 2rem; }
+.write-header { margin-bottom: 1.5rem; }
+.write-header h2 { font-family: var(--serif); font-size: 1.4rem; font-weight: 300; margin-bottom: 0.5rem; }
+.write-toolbar {
+  display: flex; gap: 8px; align-items: center; flex-wrap: wrap;
+  padding: 10px; background: var(--paper-card);
+  border: 1px solid var(--border); border-radius: 8px 8px 0 0;
+}
+.toolbar-btn {
+  background: none; border: 1px solid transparent;
+  border-radius: 4px; padding: 4px 10px;
+  font-family: var(--sans); font-size: 12px; color: var(--ink-muted);
+  cursor: pointer; transition: all 0.15s;
+}
+.toolbar-btn:hover { background: var(--accent-light); color: var(--accent); border-color: var(--border); }
+.toolbar-sep { width: 1px; height: 20px; background: var(--border); margin: 0 4px; }
+.write-meta {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 12px; margin-bottom: 12px;
+}
+.write-meta input, .write-meta select {
+  width: 100%; padding: 8px 12px;
+  border: 1px solid var(--border); border-radius: 6px;
+  font-family: var(--sans); font-size: 13px; background: var(--paper-card);
+  color: var(--ink);
+  outline: none;
+}
+.write-meta input:focus, .write-meta select:focus { border-color: var(--accent); }
+.title-input {
+  width: 100%; padding: 12px 0;
+  border: none; border-bottom: 2px solid var(--border);
+  font-family: var(--serif); font-size: 1.5rem; font-weight: 400;
+  background: transparent; color: var(--ink); outline: none;
+  margin-bottom: 12px;
+}
+.title-input:focus { border-bottom-color: var(--accent); }
+.title-input::placeholder { color: var(--ink-faint); }
+.editor-area {
+  width: 100%; min-height: 600px;
+  padding: 1.5rem; resize: none;
+  border: 1px solid var(--border); border-top: none; border-radius: 0 0 8px 8px;
+  font-family: var(--serif); font-size: 15px; line-height: 2;
+  background: var(--paper-card); color: var(--ink); outline: none;
+}
+.editor-area:focus { border-color: var(--accent); }
+.editor-area::placeholder { color: var(--ink-faint); }
+.word-counter {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 8px 12px; background: var(--paper-card);
+  border: 1px solid var(--border); border-top: none;
+  font-size: 11px; font-family: var(--mono); color: var(--ink-muted);
+  border-radius: 0 0 8px 8px; margin-top: -1px;
+}
+.word-counter .a4-guide { color: var(--accent); font-weight: 500; }
+.save-row {
+  display: flex; gap: 10px; margin-top: 1rem; justify-content: flex-end;
+}
+.btn-save {
+  background: var(--accent); color: #fff;
+  border: none; border-radius: 6px; padding: 9px 22px;
+  font-family: var(--sans); font-size: 13px; font-weight: 500; cursor: pointer;
+}
+.btn-save:hover { background: #234a30; }
+.btn-draft {
+  background: none; border: 1px solid var(--border);
+  border-radius: 6px; padding: 9px 18px;
+  font-family: var(--sans); font-size: 13px; color: var(--ink-muted); cursor: pointer;
+}
+.btn-draft:hover { background: var(--paper-warm); }
+.a4-meter {
+  margin: 12px 0; height: 6px; background: var(--border-light); border-radius: 3px;
+}
+.a4-meter-fill {
+  height: 100%; border-radius: 3px;
+  background: var(--accent); transition: width 0.3s, background 0.3s;
+}
+
+/* === READ PAGE === */
+#page-read { max-width: 720px; margin: 0 auto; padding: 2rem; }
+.read-back {
+  font-size: 12px; color: var(--ink-muted); cursor: pointer;
+  margin-bottom: 1.5rem; display: flex; align-items: center; gap: 4px;
+}
+.read-back:hover { color: var(--accent); }
+.read-post-meta { margin-bottom: 1.5rem; }
+.read-post-meta .tag {
+  display: inline-block; font-size: 11px; font-weight: 500;
+  padding: 3px 10px; border-radius: 20px;
+  background: var(--accent-light); color: var(--accent); margin-bottom: 10px;
+}
+.read-post-meta h1 {
+  font-family: var(--serif); font-size: 1.8rem; font-weight: 300;
+  line-height: 1.4; margin-bottom: 8px; letter-spacing: -0.02em;
+}
+.read-post-meta .byline { font-size: 13px; color: var(--ink-muted); }
+.post-body {
+  font-family: var(--serif); font-size: 16px; line-height: 2.1;
+  border-top: 1px solid var(--border); padding-top: 1.5rem; margin-top: 1.5rem;
+}
+.post-body p { margin-bottom: 1.2rem; }
+.related-section { margin-top: 3rem; border-top: 1px solid var(--border); padding-top: 1.5rem; }
+.related-section h3 { font-family: var(--serif); font-size: 0.75rem; font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-faint); margin-bottom: 1rem; }
+.related-list { list-style: none; }
+.related-list li { padding: 6px 0; font-size: 13px; cursor: pointer; color: var(--accent); border-bottom: 1px solid var(--border-light); }
+.related-list li:hover { text-decoration: underline; }
+
+/* === COMMENT SECTION === */
+.comment-section { margin-top: 2.5rem; }
+.comment-section h3 { font-family: var(--serif); font-size: 0.75rem; font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-faint); margin-bottom: 1.5rem; border-top: 1px solid var(--border); padding-top: 1.5rem; }
+.comment-form { margin-bottom: 2rem; }
+.comment-inputs { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px; }
+.comment-inputs input, .comment-textarea {
+  padding: 8px 12px; border: 1px solid var(--border);
+  border-radius: 6px; font-family: var(--sans); font-size: 13px;
+  background: var(--paper-card); color: var(--ink); outline: none; width: 100%;
+}
+.comment-inputs input:focus, .comment-textarea:focus { border-color: var(--accent); }
+.comment-textarea { min-height: 80px; resize: vertical; margin-bottom: 8px; display: block; }
+.btn-comment {
+  background: none; border: 1px solid var(--accent); color: var(--accent);
+  border-radius: 6px; padding: 7px 18px;
+  font-family: var(--sans); font-size: 13px; cursor: pointer;
+}
+.btn-comment:hover { background: var(--accent-light); }
+.comment-item { border-bottom: 1px solid var(--border-light); padding: 12px 0; }
+.comment-author { font-size: 13px; font-weight: 500; margin-bottom: 2px; }
+.comment-date { font-size: 11px; color: var(--ink-faint); font-family: var(--mono); margin-bottom: 6px; }
+.comment-text { font-size: 14px; color: var(--ink-muted); line-height: 1.7; }
+
+/* === TOAST === */
+.toast {
+  position: fixed; bottom: 2rem; right: 2rem;
+  background: var(--ink); color: #fff;
+  padding: 10px 20px; border-radius: 8px;
+  font-size: 13px; opacity: 0; transform: translateY(8px);
+  transition: all 0.3s; pointer-events: none; z-index: 999;
+}
+.toast.show { opacity: 1; transform: translateY(0); }
+
+@media (max-width: 700px) {
+  .home-layout { grid-template-columns: 1fr; }
+  .sidebar { border-top: 1px solid var(--border); border-right: none; }
+  .write-meta { grid-template-columns: 1fr; }
+  .comment-inputs { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="site-logo" onclick="showPage('home')">지역<span>다양성</span>연구소</div>
+  <nav class="header-nav">
+    <button class="nav-btn active" id="nav-home" onclick="showPage('home')">홈</button>
+    <button class="nav-btn" id="nav-map" onclick="showPage('map')">주제맵</button>
+    <button class="write-btn" onclick="showPage('write')">✏ 오늘의 글 쓰기</button>
+  </nav>
+</header>
+
+<!-- HOME -->
+<div id="page-home" class="page active">
+  <div class="home-hero">
+    <h1>지역사회의 다양성을<br>기록하고 연결합니다</h1>
+    <p>매일 한 페이지, 지역 · 이주 · 공동체에 관한 조사와 독서의 흔적</p>
+    <div class="hero-stats">
+      <div class="hero-stat"><span class="num" id="stat-posts">0</span><span class="label">총 글</span></div>
+      <div class="hero-stat"><span class="num" id="stat-days">0</span><span class="label">연속 기록</span></div>
+      <div class="hero-stat"><span class="num" id="stat-topics">0</span><span class="label">주제</span></div>
+    </div>
+  </div>
+  <div class="home-layout">
+    <main class="posts-section">
+      <h2>최근 기록</h2>
+      <div id="posts-list"></div>
+    </main>
+    <aside class="sidebar">
+      <h2>주제별</h2>
+      <div id="topic-filter">
+        <div class="topic-item active" data-topic="all" onclick="filterPosts('all')">
+          <span class="topic-name">전체</span>
+          <span class="topic-count" id="count-all">0</span>
+        </div>
+      </div>
+      <hr class="sidebar-divider">
+      <h2>이번 달 진척</h2>
+      <div id="progress-bars"></div>
+      <div class="streak-box">
+        <span class="streak-num" id="streak-num">0</span>
+        <span class="streak-label">일 연속 기록 중</span>
+      </div>
+    </aside>
+  </div>
+</div>
+
+<!-- MAP -->
+<div id="page-map" class="page">
+  <h2>주제맵</h2>
+  <p class="subtitle">주제별 조사 진척과 연결된 글들을 한눈에 확인하세요</p>
+  <div class="map-grid" id="map-grid"></div>
+</div>
+
+<!-- WRITE -->
+<div id="page-write" class="page">
+  <div class="write-header">
+    <h2>오늘의 기록</h2>
+    <p style="color:var(--ink-muted);font-size:13px;">A4 1장 기준 약 600–800자. 아래 게이지를 참고하세요.</p>
+  </div>
+  <div class="write-meta">
+    <input type="text" id="input-title" placeholder="제목을 입력하세요">
+    <select id="input-topic">
+      <option value="">주제 선택...</option>
+    </select>
+  </div>
+  <div class="write-toolbar">
+    <button class="toolbar-btn" onclick="insertMd('**','**')">굵게</button>
+    <button class="toolbar-btn" onclick="insertMd('*','*')">기울임</button>
+    <div class="toolbar-sep"></div>
+    <button class="toolbar-btn" onclick="insertMd('\n> ','')">인용</button>
+    <button class="toolbar-btn" onclick="insertMd('\n- ','')">목록</button>
+    <div class="toolbar-sep"></div>
+    <button class="toolbar-btn" onclick="insertDate()">📅 날짜</button>
+    <button class="toolbar-btn" onclick="insertTemplate()">📋 독서 템플릿</button>
+  </div>
+  <textarea id="editor" class="editor-area" placeholder="오늘 읽거나 조사한 내용을 자유롭게 적어주세요.
+
+연구 노트, 인상적인 구절, 현장 메모, 아이디어 — 무엇이든 좋습니다."></textarea>
+  <div class="a4-meter"><div class="a4-meter-fill" id="a4-fill" style="width:0%"></div></div>
+  <div class="word-counter">
+    <span><span id="word-count">0</span>자 입력 중</span>
+    <span class="a4-guide">A4 1장 ≈ 600–800자 │ <span id="a4-pct">0%</span></span>
+  </div>
+  <div class="save-row">
+    <button class="btn-draft" onclick="saveDraft()">임시저장</button>
+    <button class="btn-save" onclick="publishPost()">발행하기</button>
+  </div>
+</div>
+
+<!-- READ -->
+<div id="page-read" class="page">
+  <div class="read-back" onclick="showPage('home')">← 목록으로</div>
+  <div class="read-post-meta">
+    <span class="tag" id="read-tag"></span>
+    <h1 id="read-title"></h1>
+    <p class="byline" id="read-byline"></p>
+  </div>
+  <div class="post-body" id="read-body"></div>
+  <div class="related-section">
+    <h3>같은 주제의 글</h3>
+    <ul class="related-list" id="related-list"></ul>
+  </div>
+  <div class="comment-section">
+    <h3>댓글</h3>
+    <div class="comment-form">
+      <div class="comment-inputs">
+        <input id="c-name" type="text" placeholder="이름 (익명 가능)">
+        <input id="c-email" type="email" placeholder="이메일 (선택)">
+      </div>
+      <textarea class="comment-textarea" id="c-text" placeholder="읽은 소감이나 질문을 남겨주세요"></textarea>
+      <button class="btn-comment" onclick="submitComment()">댓글 달기</button>
+    </div>
+    <div id="comments-list"></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ===== DATA STORE =====
+const TOPICS = ['지역정책', '이주·이민', '공동체 연구', '도시사회학', '현장 메모'];
+const TOPIC_GOALS = { '지역정책': 10, '이주·이민': 12, '공동체 연구': 8, '도시사회학': 10, '현장 메모': 15 };
+
+let posts = JSON.parse(localStorage.getItem('rdi_posts') || '[]');
+let comments = JSON.parse(localStorage.getItem('rdi_comments') || '{}');
+let currentFilter = 'all';
+let currentPostId = null;
+
+// seed demo data if empty
+if (posts.length === 0) {
+  const today = new Date();
+  const fmt = (d) => d.toISOString().split('T')[0];
+  const d0 = new Date(today); d0.setDate(today.getDate() - 0);
+  const d1 = new Date(today); d1.setDate(today.getDate() - 1);
+  const d2 = new Date(today); d2.setDate(today.getDate() - 3);
+  const d3 = new Date(today); d3.setDate(today.getDate() - 5);
+  const d4 = new Date(today); d4.setDate(today.getDate() - 7);
+
+  posts = [
+    { id: 1, date: fmt(d0), title: '농촌 소멸과 귀농 정책의 간극', topic: '지역정책', body: '오늘 읽은 보고서는 통계청의 2023년 인구이동통계를 기반으로 한다. 전국 228개 시·군·구 중 절반 이상이 인구 감소 위험에 처해 있으며, 특히 경북·전남 내륙 지역의 순유출이 가파르다.\n\n흥미로운 점은 귀농 인구가 꾸준히 증가하고 있음에도 불구하고 소멸 지수가 개선되지 않는다는 것이다. 이는 귀농자의 연령대가 주로 50대 이상이기 때문으로, 청년 정착 프로그램이 실질적으로 작동하지 않고 있음을 시사한다.\n\n지역정책 연구에서 자주 놓치는 부분이 바로 이 지점이다. 숫자만 보면 귀농이 늘었으니 정책이 성공한 것처럼 보이지만, 구조적 문제(학교 소멸, 의료 공백, 일자리 부재)는 그대로다. 다음 주에는 충남 홍성군 사례를 직접 인터뷰로 살펴볼 예정이다.', draft: false },
+    { id: 2, date: fmt(d1), title: '이주민 2세대의 정체성 협상', topic: '이주·이민', body: '베트남 출신 이주민 2세대 청소년 세 명과 비공식 대화를 나눴다. 모두 경기도 안산 출생이며, 학교에서는 한국어를, 집에서는 베트남어를 쓴다.\n\n공통적으로 나온 표현이 "반쪽"이었다. 한국인도 아니고 베트남인도 아닌 중간 어딘가에 있다는 감각. 그러나 이것을 단순히 소외로 읽어서는 안 된다는 생각이 들었다. 이들은 두 문화를 오가는 유연성을 하나의 자원으로 인식하기도 했다.\n\n오늘 읽은 논문(Park, 2022)은 이를 "문화적 중개자" 역할로 개념화한다. 그러나 그 역할을 수행하는 부담이 개인에게 지나치게 집중된다는 비판도 함께 제기된다. 제도적 지원 없이 개인의 적응력에 의존하는 구조가 문제의 핵심이다.', draft: false },
+    { id: 3, date: fmt(d2), title: '공동체 마을 사례: 홍동·청양', topic: '공동체 연구', body: '충남 홍동의 풀무학교와 홍동밀알공동체를 중심으로 한 연구 자료를 검토했다. 이 지역은 1950년대 시작된 협동조합 운동의 역사를 가지고 있으며, 현재까지도 지역 내 사회적 경제 비율이 전국 최고 수준이다.\n\n특히 주목할 만한 것은 외부인 유입에 대한 태도다. 홍동의 경우 귀촌자를 즉각 공동체 구성원으로 받아들이기보다, 최소 2-3년의 관계 형성 기간을 비공식적으로 요구한다. 이는 공동체의 신뢰 자본을 보호하는 장치로 작동한다.', draft: false },
+    { id: 4, date: fmt(d3), title: '로컬푸드 운동의 계급적 함의', topic: '도시사회학', body: '도시 로컬푸드 운동을 계급 분석의 렌즈로 바라본 논문(정민우, 2021)을 읽었다. 서울 성동구와 마포구의 도시농업·로컬푸드 매장을 이용하는 소비자 프로필 분석이 흥미롭다.\n\n결론을 요약하면, 로컬푸드 소비는 생태적 가치 지향과 높은 교육 수준, 중상위 소득층과 강한 상관관계를 보인다. 즉 "착한 소비"가 특정 계층의 문화자본 표현 방식이 되는 역설이 존재한다.', draft: false },
+    { id: 5, date: fmt(d4), title: '현장 메모: 대전 중리동 방문', topic: '현장 메모', body: '오후에 대전 서구 중리동을 돌아봤다. 1970년대 형성된 구도심 주거지로, 현재는 고령화와 공가 증가가 두드러진다.\n\n골목길에서 만난 주민(75세 여성)은 "젊은 사람들이 다 나가서 이제 노인들만 남았어"라고 말했다. 2010년대 초까지만 해도 아이들 소리가 났다고. 지금은 복지관 셔틀버스가 그나마 움직이는 유일한 정기적 방문자라고 한다.\n\n공간적으로는 빈집이 군데군데 흩어진 패턴이 아니라, 블록 단위로 비어가는 양상을 보인다. 이는 사회관계망 붕괴가 공간 붕괴를 가속화한다는 가설을 지지하는 관찰이다.', draft: false },
+  ];
+  localStorage.setItem('rdi_posts', JSON.stringify(posts));
+}
+
+// ===== UTILITIES =====
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+function formatDate(d) {
+  const dt = new Date(d);
+  return `${dt.getFullYear()}년 ${dt.getMonth()+1}월 ${dt.getDate()}일`;
+}
+
+function excerpt(text, len=120) {
+  return text.replace(/\n/g,' ').slice(0,len) + (text.length > len ? '…' : '');
+}
+
+function markdownToHtml(text) {
+  return text
+    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\*(.*?)\*/g, '<em>$1</em>')
+    .replace(/^> (.+)$/gm, '<blockquote style="border-left:3px solid var(--accent);padding-left:1rem;color:var(--ink-muted);margin:1rem 0">$1</blockquote>')
+    .replace(/^- (.+)$/gm, '<li>$1</li>')
+    .replace(/(<li>.*<\/li>)/s, '<ul style="padding-left:1.5rem;margin:0.5rem 0">$1</ul>')
+    .split('\n\n').map(p => p.startsWith('<') ? p : `<p>${p.replace(/\n/g,'<br>')}</p>`).join('');
+}
+
+// ===== RENDER =====
+function renderHome() {
+  // stats
+  const pub = posts.filter(p => !p.draft);
+  document.getElementById('stat-posts').textContent = pub.length;
+  document.getElementById('stat-topics').textContent = TOPICS.length;
+  document.getElementById('streak-num').textContent = calcStreak();
+  document.getElementById('stat-days').textContent = calcStreak();
+
+  // topic filter sidebar
+  const tf = document.getElementById('topic-filter');
+  const countAll = document.getElementById('count-all');
+  countAll.textContent = pub.length;
+
+  const existing = tf.querySelectorAll('[data-topic]:not([data-topic="all"])');
+  existing.forEach(e => e.remove());
+
+  TOPICS.forEach(topic => {
+    const cnt = pub.filter(p => p.topic === topic).length;
+    const div = document.createElement('div');
+    div.className = 'topic-item' + (currentFilter === topic ? ' active' : '');
+    div.dataset.topic = topic;
+    div.onclick = () => filterPosts(topic);
+    div.innerHTML = `<span class="topic-name">${topic}</span><span class="topic-count">${cnt}</span>`;
+    tf.appendChild(div);
+  });
+
+  // progress bars
+  const pb = document.getElementById('progress-bars');
+  pb.innerHTML = '';
+  TOPICS.forEach(topic => {
+    const cnt = pub.filter(p => p.topic === topic).length;
+    const goal = TOPIC_GOALS[topic] || 10;
+    const pct = Math.min(100, Math.round(cnt / goal * 100));
+    pb.innerHTML += `
+      <div class="progress-label"><span>${topic}</span><span>${cnt}/${goal}</span></div>
+      <div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>`;
+  });
+
+  renderPostsList();
+
+  // topic select in writer
+  const sel = document.getElementById('input-topic');
+  sel.innerHTML = '<option value="">주제 선택...</option>';
+  TOPICS.forEach(t => sel.innerHTML += `<option value="${t}">${t}</option>`);
+}
+
+function renderPostsList() {
+  const filtered = currentFilter === 'all'
+    ? posts.filter(p => !p.draft)
+    : posts.filter(p => !p.draft && p.topic === currentFilter);
+  filtered.sort((a,b) => b.date.localeCompare(a.date));
+
+  const container = document.getElementById('posts-list');
+  container.innerHTML = '';
+  if (filtered.length === 0) {
+    container.innerHTML = '<p style="color:var(--ink-faint);font-size:13px;padding:1rem 0">아직 글이 없습니다. 첫 기록을 시작해보세요!</p>';
+    return;
+  }
+  filtered.forEach(p => {
+    const div = document.createElement('div');
+    div.className = 'post-card';
+    const cc = (comments[p.id] || []).length;
+    div.innerHTML = `
+      <div class="post-meta">
+        <span class="post-date">${p.date}</span>
+        <span class="post-tag">${p.topic || '미분류'}</span>
+      </div>
+      <h3>${p.title}</h3>
+      <p class="excerpt">${excerpt(p.body)}</p>
+      <div class="footer">
+        <span>💬 ${cc}개 댓글</span>
+        <span>${p.body.length}자</span>
+      </div>`;
+    div.onclick = () => openPost(p.id);
+    container.appendChild(div);
+  });
+}
+
+function filterPosts(topic) {
+  currentFilter = topic;
+  document.querySelectorAll('.topic-item').forEach(el => {
+    el.classList.toggle('active', el.dataset.topic === topic);
+  });
+  renderPostsList();
+}
+
+function calcStreak() {
+  const pub = posts.filter(p=>!p.draft).map(p=>p.date).sort().reverse();
+  if (!pub.length) return 0;
+  let streak = 0, cur = new Date();
+  for (let i = 0; i < 100; i++) {
+    const d = cur.toISOString().split('T')[0];
+    if (pub.includes(d)) { streak++; cur.setDate(cur.getDate()-1); }
+    else if (i === 0) { cur.setDate(cur.getDate()-1); }
+    else break;
+  }
+  return streak;
+}
+
+function renderMap() {
+  const grid = document.getElementById('map-grid');
+  grid.innerHTML = '';
+  const insights = {
+    '지역정책': '귀농 정책의 구조적 한계를 집중 탐색 중',
+    '이주·이민': '2세대 정체성 협상이 핵심 문제의식으로 부상',
+    '공동체 연구': '신뢰 자본과 외부인 수용 패턴에 주목',
+    '도시사회학': '로컬푸드 운동의 계급 함의 분석 진행 중',
+    '현장 메모': '대전·충남 지역 중심의 현장 기록 축적 중'
+  };
+  TOPICS.forEach(topic => {
+    const topicPosts = posts.filter(p => !p.draft && p.topic === topic);
+    const goal = TOPIC_GOALS[topic] || 10;
+    const pct = Math.min(100, Math.round(topicPosts.length / goal * 100));
+    const card = document.createElement('div');
+    card.className = 'map-topic-card';
+    const listItems = topicPosts.slice(0,4).map(p => `<li>${p.date} · ${p.title}</li>`).join('');
+    card.innerHTML = `
+      <div class="map-topic-header">
+        <span class="map-topic-name">${topic}</span>
+        <span class="map-topic-posts">${topicPosts.length}편</span>
+      </div>
+      <div class="map-bar"><div class="map-bar-fill" style="width:${pct}%"></div></div>
+      <ul class="map-posts-list">${listItems || '<li style="color:var(--ink-faint)">아직 글이 없습니다</li>'}</ul>
+      ${insights[topic] ? `<div class="map-insight"><p>${insights[topic]}</p></div>` : ''}`;
+    card.onclick = () => { filterPosts(topic); showPage('home'); };
+    grid.appendChild(card);
+  });
+}
+
+// ===== OPEN POST =====
+function openPost(id) {
+  const p = posts.find(x => x.id === id);
+  if (!p) return;
+  currentPostId = id;
+  document.getElementById('read-tag').textContent = p.topic || '미분류';
+  document.getElementById('read-title').textContent = p.title;
+  document.getElementById('read-byline').textContent = `${formatDate(p.date)} · 지역다양성연구소`;
+  document.getElementById('read-body').innerHTML = markdownToHtml(p.body);
+
+  const related = posts.filter(x => !x.draft && x.topic === p.topic && x.id !== id).slice(0,4);
+  const rl = document.getElementById('related-list');
+  rl.innerHTML = related.length ? related.map(r => `<li onclick="openPost(${r.id})">${r.title}</li>`).join('') : '<li style="color:var(--ink-faint)">관련 글이 아직 없습니다</li>';
+
+  renderComments(id);
+  showPage('read');
+}
+
+function renderComments(id) {
+  const list = document.getElementById('comments-list');
+  const cs = comments[id] || [];
+  list.innerHTML = cs.length ? cs.map(c => `
+    <div class="comment-item">
+      <div class="comment-author">${c.name}</div>
+      <div class="comment-date">${c.date}</div>
+      <div class="comment-text">${c.text}</div>
+    </div>`).join('') : '<p style="color:var(--ink-faint);font-size:13px">첫 댓글을 남겨보세요</p>';
+}
+
+function submitComment() {
+  const name = document.getElementById('c-name').value.trim() || '익명';
+  const text = document.getElementById('c-text').value.trim();
+  if (!text) return showToast('댓글 내용을 입력해주세요');
+  if (!comments[currentPostId]) comments[currentPostId] = [];
+  comments[currentPostId].push({ name, text, date: new Date().toLocaleDateString('ko-KR') });
+  localStorage.setItem('rdi_comments', JSON.stringify(comments));
+  document.getElementById('c-name').value = '';
+  document.getElementById('c-text').value = '';
+  renderComments(currentPostId);
+  showToast('댓글이 등록되었습니다 💬');
+}
+
+// ===== WRITE =====
+let editorEl;
+window.onload = () => {
+  editorEl = document.getElementById('editor');
+  editorEl.addEventListener('input', updateCounter);
+  renderHome();
+};
+
+function updateCounter() {
+  const len = editorEl.value.length;
+  document.getElementById('word-count').textContent = len;
+  const pct = Math.min(100, Math.round(len / 700 * 100));
+  document.getElementById('a4-pct').textContent = pct + '%';
+  const fill = document.getElementById('a4-fill');
+  fill.style.width = pct + '%';
+  fill.style.background = pct >= 100 ? '#e55' : pct >= 70 ? '#2d5a3d' : '#4a8c60';
+}
+
+function insertMd(before, after) {
+  const ta = editorEl;
+  const s = ta.selectionStart, e = ta.selectionEnd;
+  const sel = ta.value.substring(s, e);
+  ta.value = ta.value.substring(0,s) + before + sel + after + ta.value.substring(e);
+  ta.focus(); ta.setSelectionRange(s+before.length, e+before.length);
+  updateCounter();
+}
+
+function insertDate() {
+  const d = new Date().toLocaleDateString('ko-KR', {year:'numeric',month:'long',day:'numeric'});
+  insertMd(d + '\n', '');
+}
+
+function insertTemplate() {
+  const tpl = `📖 출처: \n\n✏ 핵심 내용:\n\n💡 내 생각:\n\n🔗 연결 가능한 주제:\n`;
+  insertMd('\n' + tpl, '');
+}
+
+function saveDraft() {
+  const title = document.getElementById('input-title').value.trim();
+  const body = editorEl.value.trim();
+  if (!title || !body) return showToast('제목과 내용을 입력해주세요');
+  const id = Date.now();
+  posts.unshift({ id, date: new Date().toISOString().split('T')[0], title, topic: document.getElementById('input-topic').value, body, draft: true });
+  localStorage.setItem('rdi_posts', JSON.stringify(posts));
+  showToast('임시저장되었습니다 💾');
+}
+
+function publishPost() {
+  const title = document.getElementById('input-title').value.trim();
+  const body = editorEl.value.trim();
+  const topic = document.getElementById('input-topic').value;
+  if (!title || !body) return showToast('제목과 내용을 입력해주세요');
+  if (!topic) return showToast('주제를 선택해주세요');
+  const id = Date.now();
+  posts.unshift({ id, date: new Date().toISOString().split('T')[0], title, topic, body, draft: false });
+  localStorage.setItem('rdi_posts', JSON.stringify(posts));
+  document.getElementById('input-title').value = '';
+  document.getElementById('input-topic').value = '';
+  editorEl.value = '';
+  updateCounter();
+  renderHome();
+  showPage('home');
+  showToast('발행되었습니다 ✓');
+}
+
+// ===== NAVIGATION =====
+function showPage(name) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + name).classList.add('active');
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  const nb = document.getElementById('nav-' + name);
+  if (nb) nb.classList.add('active');
+  if (name === 'map') renderMap();
+  if (name === 'home') renderHome();
+  window.scrollTo(0,0);
+}
+</script>
+</body>
+</html>
